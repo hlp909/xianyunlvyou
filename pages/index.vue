@@ -41,8 +41,12 @@
                 class="search-input">
                     <input 
                     :placeholder="options[currentOption].placeholder" 
+                    @keyup.enter="handleSearch"
+                    v-model="searchValue"
                    />
-                    <i class="el-icon-search"></i>
+                    <i class="el-icon-search"
+                        @click="handleSearch"
+                    ></i>
                 </el-row>
             </div>
         </div>
@@ -56,11 +60,12 @@ export default {
             banners: [],    // 轮播图数据
             //tab栏数据
             options:[
-              {name:"攻略", placeholder:"搜索城市"},
-              {name:"酒店", placeholder:"请输入城市搜索酒店"},
+              {name:"攻略", placeholder:"搜索城市",pageURL:'/post?city='},
+              {name:"酒店", placeholder:"请输入城市搜索酒店",pageURL:'/hotel?city='},
               {name:"机票", placeholder:"请输入出发地"},
             ],
-            currentOption:0    //当前的tab
+            currentOption:0  ,    //当前的tab,
+            searchValue:''
         }
     },
     methods:{
@@ -72,7 +77,17 @@ export default {
         }
         // 处理高亮，给当前的按钮添加active class
         this.currentOption=index
-      }
+      },
+
+        // 搜索页的跳转
+        handleSearch(){
+            // console.log(123);
+
+            //拼接链接
+            const url=this.options[this.currentOption].pageURL+this.searchValue;
+            this.$router.push(url)
+        }
+
     }
     ,
 
