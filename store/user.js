@@ -2,11 +2,18 @@
 // 只需要保留store的属性，(固定的写法)
 
 export const state={
+    // 采用接口返回的数据结构
     userInfo:{
-        username:"张常宁"
+        token:'',
+        user:{}
     }
 }
 
-export const mutactions={}
+export const mutations={
+     // 保存用户信息到state
+    setUserInfo(state,data){
+        state.userInfo=data
+    }
+}
 
 export const actions={}

@@ -18,6 +18,10 @@
             </el-input>
         </el-form-item>
 
+         <p class="form-text">
+            <nuxt-link to="#">忘记密码</nuxt-link>
+        </p>
+
         <el-button type="primary" class="login" @click="handleSubmit">登录</el-button>
         
       </el-form>
@@ -56,7 +60,9 @@ export default {
                         method:'POST',
                         data:this.form
                     }).then(res=>{
-                        console.log(res.data);
+                        // console.log(res.data);
+                        //调用store的方法把用户的数据传过去
+                        this.$store.commit('user/setUserInfo',res.data)
                     })
                 }
             })
@@ -73,11 +79,17 @@ export default {
         .form-item{
             margin-bottom:20px;
         }
+        .form-text{
+        font-size:12px;
+        color:#409EFF;
+        text-align: right;
+        line-height: 1;
+    }
         .login{
-                width: 100%;
+            width:100%;
+            margin-top:10px;
         }
     }
     
-</style>>
-
 </style>
+

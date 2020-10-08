@@ -21,8 +21,9 @@
               <div v-if='true'>
                   <el-dropdown>
                         <span class="el-dropdown-link">
-                            <img src="http://157.122.54.189:9095/assets/images/avatar.jpg" alt="">
-                            隔壁老张
+                            <img :src="$axios.defaults.baseURL + 
+                            $store.state.user.userInfo.user.defaultAvatar" >
+                            {{$store.state.user.userInfo.user.nickname}} 
                             <i class="el-icon-arrow-down el-icon--right"></i>
                         </span>
                         <el-dropdown-menu slot="dropdown">
