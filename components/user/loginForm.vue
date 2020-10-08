@@ -48,8 +48,19 @@ export default {
     methods:{
         //提交登录事件
         handleSubmit(){
-             console.log(this.form);
-        
+            this.$refs.form.validate((valid)=>{
+                if(valid){
+                    //调用登录接口
+                    this.$axios({
+                        url:'/accounts/login',
+                        method:'POST',
+                        data:this.form
+                    }).then(res=>{
+                        console.log(res.data);
+                    })
+                }
+            })
+             
         }
     }
 }
