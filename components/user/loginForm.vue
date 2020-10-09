@@ -52,7 +52,7 @@ export default {
     methods:{
         //提交登录事件
         handleSubmit(){
-            this.$refs.form.validate((valid)=>{
+            this.$refs['form'].validate((valid)=>{
                 if(valid){
                     //调用登录接口
                     this.$axios({
@@ -60,7 +60,7 @@ export default {
                         method:'POST',
                         data:this.form
                     }).then(res=>{
-                        // console.log(res.data);
+                        console.log(res.data);
                         //调用store的方法把用户的数据传过去
                         this.$store.commit('user/setUserInfo',res.data)
                     })

@@ -42,7 +42,7 @@
             type="password">
             </el-input>
         </el-form-item>
-        <el-button type="primary" class="login" @click="handleSubmit">注册</el-button>
+        <el-button type="primary" class="login" @click="handleRegSubmit">注册</el-button>
         
       </el-form>
   </div>
@@ -93,6 +93,5 @@ export default {
         }
     }
     
-</style>>
-
 </style>
+

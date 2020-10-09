@@ -18,7 +18,7 @@
 
           <!-- 登录注册 -->
           <div class="header-right">
-              <div v-if='true'>
+              <div v-if='$store.state.user.userInfo.token'>
                   <el-dropdown>
                         <span class="el-dropdown-link">
                             <img :src="$axios.defaults.baseURL + 
@@ -28,7 +28,9 @@
                         </span>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item>个人中心</el-dropdown-item>
-                            <el-dropdown-item divided>退出</el-dropdown-item>
+                            <el-dropdown-item divided>
+                                <div @click="handleLoginOut">退出</div>
+                            </el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
               </div>
@@ -42,9 +44,11 @@
 
 <script>
 export default {
-    mounted(){
-        console.log(this.$store.state.user.userInfo.username);
-        
+    methods:{
+        handleLoginOut(){
+           this.$store.commit('user/claerUserInfo')
+           this.$message.success('退出成功')
+        }
     }
 }
 </script>
