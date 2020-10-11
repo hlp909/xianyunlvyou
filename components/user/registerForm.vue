@@ -12,7 +12,8 @@
 
         <el-form-item class="form-item">
                 <el-input 
-                placeholder="验证码" >
+                placeholder="验证码" 
+                 v-model="form.captcha">
                     <template slot="append">
                         <el-button @click="handleSendCaptcha">
                             发送验证码
@@ -23,7 +24,8 @@
 
         <el-form-item class="form-item">
                 <el-input 
-                placeholder="昵称">
+                placeholder="昵称"
+                v-model="form.nickname">
                 </el-input>
         </el-form-item>
 
@@ -39,7 +41,8 @@
         <el-form-item prop="password">
             <el-input 
             placeholder="确认密码" 
-            type="password">
+            type="password"
+            v-model="form.checkPassword">
             </el-input>
         </el-form-item>
         <el-button type="primary" class="login" @click="handleRegSubmit">注册</el-button>
@@ -53,8 +56,11 @@ export default {
     data(){
         return {
             form:{
-                username:'',
-                password:''
+                username: "",   // 登录用户名/手机
+                password: "",    // 登录密码
+                checkPassword: "", // 确认密码
+                nickname: "",	// 昵称
+                captcha: ""		// 手机验证码
             },
             rules:{
                 username:[
