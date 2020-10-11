@@ -36,5 +36,16 @@ export const actions={
             // 调用外部成功的回调函数
             Promise.resolve('')
         })
+    },
+    register({commit},data){
+         // 注册提交
+        return this.$axios({
+             url: `/accounts/register`,
+             method: "POST",
+             data
+         }).then(res => {
+             commit('setUserInfo',res.data)
+             Promise.resolve('')
+         })
     }
 }

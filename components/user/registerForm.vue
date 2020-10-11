@@ -128,7 +128,24 @@ export default {
 
         // 注册
         handleRegSubmit(){
-           console.log(this.form)
+           this.$refs['form'].validate((valid) => {
+                if (valid) {
+                    // 注册提交
+                    const {checkPassword, ...props} = this.form;
+
+                    // this.$axios({
+                    //     url: `/accounts/register`,
+                    //     method: "POST",
+                    //     data: props
+                    // }).then(res => {
+                    //     console.log(res.data);
+                    // })
+                    this.$store.dispatch('user/register',props).then(res=>{
+                        // this.$router.push('/user/login')
+                        this.$message.success('注册成功')
+                    })
+                } 
+            });
         }
     }
 }

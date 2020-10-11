@@ -35,7 +35,7 @@
                     </el-dropdown>
               </div>
               
-              <div class="login-link" v-else>登录 / 注册</div>
+              <div class="login-link" v-else @click="handleLogin">登录 / 注册</div>
           </div>
          
       </el-row>
@@ -48,6 +48,11 @@ export default {
         handleLoginOut(){
            this.$store.commit('user/claerUserInfo')
            this.$message.success('退出成功')
+           this.$router.push('/user/login')
+        },
+        //点击跳转到登录页
+        handleLogin(){
+            this.$router.push('/user/login')
         }
     }
 }
@@ -103,6 +108,9 @@ export default {
                             border-color: #409eff;
                         }
                     };
+                }
+                .login-link{
+                    cursor: pointer;
                 }
         }
     }
