@@ -14,7 +14,7 @@ export const mutations={
     setUserInfo(state,data){
         state.userInfo=data
     },
-    //清楚用户数据
+    //清除用户数据
     claerUserInfo(state){
         state.userInfo={
             token:'',
@@ -23,4 +23,18 @@ export const mutations={
     }
 }
 
-export const actions={}
+//存放公共的异步方法
+export const actions={
+    login({commit},data){
+         //调用登录接口
+         return this.$axios({
+            url:'/accounts/login',
+            method:'POST',
+            data
+        }).then(res=>{
+            commit('setUserInfo',res.data)
+            // 调用外部成功的回调函数
+            Promise.resolve('')
+        })
+    }
+}
