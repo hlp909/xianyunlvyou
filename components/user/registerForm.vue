@@ -54,6 +54,16 @@
 <script>
 export default {
     data(){
+        // 确认密码
+    const validatePass = (rule, value, callback) => {
+        if (value === '') {
+            callback(new Error('请再次输入密码'));
+        } else if (value !== this.form.password) {
+            callback(new Error('两次输入密码不一致!'));
+        } else {
+            callback();
+        }
+    }
         return {
             form:{
                 username: "",   // 登录用户名/手机
@@ -68,7 +78,16 @@ export default {
                 ],
                 password:[
                     {required:true,message:'请输入密码',trigger: 'blur'}
-                ]
+                ],
+                checkPassword: [
+                    {validator: validatePass, trigger: 'blur' }
+                ],
+                nickname: [
+                    {required: true, message: '请输入昵称', trigger: 'blur' }
+                ],
+                captcha: [
+                    { required: true, message: '请输入验证码', trigger: 'blur' }
+                    ],
             }
         }
         
