@@ -149,7 +149,15 @@ export default {
 
         // 触发和目标城市切换时触发
         handleReverse(){
-            
+            // 把出发城市传给达到城市，把到达城市传给出发城市
+            const {departCity,departCode,destCity,destCode}=this.form
+            // 把出发城市传给达到城市
+            this.form.departCity=destCity
+            this.form.departCode=destCode
+
+            // 把到达城市传给出发城市
+            this.form.destCity=departCity
+            this.form.destCode=departCode
         },
 
         // 提交表单是触发
