@@ -154,7 +154,37 @@ export default {
 
         // 提交表单是触发
         handleSubmit(){
-            console.log(this.form)
+            // 自定义表单验证
+            const rules={
+                departCity:{
+                    value:this.form.departCity,
+                    message:'请选择出发城市'
+                },
+                destCity:{
+                    value:this.form.destCity,
+                    message:'请选择到达城市'
+                },
+                departDate:{
+                    value:this.form.departDate,
+                    message:'请选择出发时间'
+                }
+            }
+
+            //验证的变量，默认验证通过
+            let valid=true;
+            Object.keys(rules).forEach(v=>{
+                if(!valid) return;
+
+                // 如果有一项数据不存在
+                if(!rules[v].value){
+                    this.$message.warning(rules[v].message)
+                    // 验证不通过
+                    valid=false
+               }
+            })
+            // 验证不通过 直接返回
+            if(!valid) return;
+
             this.$router.push({
                 path:'/air/flights',
                 query:this.form
