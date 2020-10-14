@@ -78,7 +78,13 @@ export default {
     methods:{
         // tab切换时触发
         handleSearchTab(item,index){
-            this.currentTab=index
+            if(index==1){
+                this.$confirm('业务暂时不提供往返', '提示', {
+                    confirmButtonText: '确定',
+                    // cancelButtonText: '取消',
+                    type: 'warning'
+                })
+            }
         },
         
         // 出发城市输入框获得焦点时触发
