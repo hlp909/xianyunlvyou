@@ -18,6 +18,7 @@
                 :fetch-suggestions="queryDepartSearch"
                 placeholder="请搜索出发城市"
                 @select="handleDepartSelect"
+                v-model="form.departCity"
                 class="el-autocomplete"
                 ></el-autocomplete>
             </el-form-item>
@@ -26,6 +27,7 @@
                 :fetch-suggestions="queryDestSearch"
                 placeholder="请搜索到达城市"
                 @select="handleDestSelect"
+                 v-model="form.destCity"
                 class="el-autocomplete"
                 ></el-autocomplete>
             </el-form-item>
@@ -33,6 +35,7 @@
                 <!-- change 用户确认选择日期时触发 -->
                 <el-date-picker type="date" 
                 placeholder="请选择日期" 
+                 v-model="form.departDate"
                 style="width: 100%;"
                 @change="handleDate">
                 </el-date-picker>
@@ -61,7 +64,14 @@ export default {
                 {icon:'iconfont icondancheng',name:'单程'},
                 {icon:'iconfont iconshuangxiang',name:'往返'}
             ],
-            currentTab:0
+            currentTab:0,
+            form:{
+                departCity:'',
+                departCode:'',
+                destCity:'',
+                destCode:'',
+                departDate:''
+            }
         }
     },
     methods:{
@@ -73,11 +83,26 @@ export default {
         // 出发城市输入框获得焦点时触发
         // value 是选中的值，cb是回调函数，接收要展示的列表
         queryDepartSearch(value, cb){
-            cb([
-                {value: 1},
-                {value: 2},
-                {value: 3},
-            ]);
+            
+            if(!value) return;
+
+            //请求机票城市的接口
+            this.$axios({
+                url:'http://157.122.54.189:9095/airs/city?name='+value,
+                method:"GET",
+            }).then(res=>{
+                const {data}=res.data
+
+                // 给data每一项都加value
+                const newData=data.map(v=>{
+                        return{
+                            ...v,
+                            value:v.name.replace('市','')
+                        }
+                })
+                cb(newData);
+            }) 
+           
         },
 
         // 目标城市输入框获得焦点时触发
