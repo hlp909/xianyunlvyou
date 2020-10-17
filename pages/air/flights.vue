@@ -14,7 +14,7 @@
                 
                 <!-- 航班信息 -->
                 <FlightsItem 
-                v-for="(item,index) in flightData.flights"
+                v-for="(item,index) in flightsData.flights"
                 :key="index"
                 :data="item"
                 />
@@ -37,7 +37,7 @@ import FlightsItem from "@/components/air/flightsItem.vue"
 export default {
     data(){
         return {
-            flightData:{},
+            flightsData:{},
         }
     },
      components: {
@@ -50,8 +50,9 @@ export default {
             url:'/airs',
             params:this.$route.query
         }).then(res=>{
-            const {data}=res.data
-            this.flightData=data;
+            console.log(res.data);
+            
+            this.flightsData=res.data;
         })
     }
 }
