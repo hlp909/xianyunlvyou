@@ -21,10 +21,10 @@
             <el-col :span="4">
                 <el-select size="mini" v-model="flightTimes"  placeholder="起飞时间" @change="handleFlightTimes">
                     <el-option
-                    v-for="(item,index) in data.options.flightTimes"
+                    v-for="(item, index) in data.options.flightTimes"
                     :key="index"
                     :label="`${item.from}:00 - ${item.to}:00`"
-                    :value="1"
+                    :value="`${item.from},${item.to}`"
                     >
                     </el-option>
                 </el-select>
@@ -89,12 +89,28 @@ export default {
     methods: {
         // 选择机场时候触发
         handleAirport(value){
-            
+            // this.data是缓存的大数据，是不会被修改的
+            const arr=this.data.flights.filter(v=>{
+                return v.org_airport_name===value
+            })
+            //触发修改机票列表的方法
+            this.$emit('setDataList',arr)
         },
 
         // 选择出发时间时候触发
         handleFlightTimes(value){
+            console.log(value)
+               // this.data是缓存的大数据，是不会被修改的
+             const [from, to] = value.split(","); // [6,12]
             
+            const arr = this.data.flights.filter(v => {
+                // 出发时间小时
+                const start = +v.dep_time.split(":")[0];
+                return start >= from && start < to;
+            });
+            
+            this.$emit("setDataList", arr);
+
         },
 
          // 选择航空公司时候触发
