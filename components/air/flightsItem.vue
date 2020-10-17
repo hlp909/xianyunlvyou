@@ -63,7 +63,8 @@ export default {
             // 默认是空数组
             default: {}
         }
-    }
+    },
+   
 }
 </script>
 

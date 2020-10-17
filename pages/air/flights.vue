@@ -13,7 +13,11 @@
                     <FlightsListHead/>
                 
                 <!-- 航班信息 -->
-                <FlightsItem/>
+                <FlightsItem 
+                v-for="(item,index) in flightData.flights"
+                :key="index"
+                :data="item"
+                />
                 
             </div>
 
@@ -33,12 +37,22 @@ import FlightsItem from "@/components/air/flightsItem.vue"
 export default {
     data(){
         return {
-            
+            flightData:{},
         }
     },
      components: {
         FlightsListHead,
         FlightsItem
+    },
+    mounted(){
+        //请求机票列表
+        this.$axios({
+            url:'/airs',
+            params:this.$route.query
+        }).then(res=>{
+            const {data}=res.data
+            this.flightData=data;
+        })
     }
 }
 </script>
