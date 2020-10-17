@@ -5,9 +5,7 @@
             <!-- 顶部过滤列表 -->
             <div class="flights-content">
                 <!-- 过滤条件 -->
-                <div>
-                    
-                </div>
+                <FlightsFilters :data="flightsData"/>
                 
                 <!-- 航班头部布局 -->
                     <FlightsListHead/>
@@ -49,7 +47,12 @@ import FlightsFilters from "@/components/air/flightsFilters.vue"
 export default {
     data(){
         return {
-            flightsData:{},
+            //航班总数据
+            flightsData:{
+                flights: [],
+                info: {},
+                options: {}
+            },
             //默认当前页
             pageIndex:1,
             // 默认条数
