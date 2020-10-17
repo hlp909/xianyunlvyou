@@ -44,6 +44,7 @@
 
 import FlightsListHead from "@/components/air/flightsListHead.vue"
 import FlightsItem from "@/components/air/flightsItem.vue"
+import FlightsFilters from "@/components/air/flightsFilters.vue"
 
 export default {
     data(){
@@ -61,7 +62,8 @@ export default {
     },
      components: {
         FlightsListHead,
-        FlightsItem
+        FlightsItem,
+        FlightsFilters
     },
     
     methods:{
