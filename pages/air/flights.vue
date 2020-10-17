@@ -68,16 +68,23 @@ export default {
         // 切换条数的时候触发
         handleSizeChange(value){
             this.pageSize=value
+            this.setDataList()
         },
+
+        // 切换页数的时候触发
         handleCurrentChange(value){
-            console.log(value);
-            this.pageindex=value;
-            this.dataList=this.flightsData.flights.slice(
+            this.pageIndex=value;
+            this.setDataList()
+            
+        },
+
+        // 设置机票列表的数据
+        setDataList(){
+             this.dataList=this.flightsData.flights.slice(
                 // 在总列表中截取出当前页的数据
                (this.pageIndex-1)*this.pageSize,
                this.pageIndex*this.pageSize
             )
-            
         }
     }
     ,
