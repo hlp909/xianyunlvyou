@@ -13,11 +13,22 @@
                     <FlightsListHead/>
                 
                 <!-- 航班信息 -->
-                <FlightsItem 
-                v-for="(item,index) in flightsData.flights"
-                :key="index"
-                :data="item"
-                />
+                <div>
+                    <FlightsItem 
+                    v-for="(item,index) in flightsData.flights"
+                    :key="index"
+                    :data="item"
+                    />
+                    <el-pagination
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange"
+                        :current-page="pageIndex"
+                        :page-sizes="[5, 10, 15, 20]"
+                        :page-size="pageSize"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="total">
+                    </el-pagination>
+                </div>
                 
             </div>
 
@@ -38,12 +49,30 @@ export default {
     data(){
         return {
             flightsData:{},
+            //默认当前页
+            pageIndex:1,
+            // 默认条数
+            pageSize:5,
+            // 总条数
+            total:0
         }
     },
      components: {
         FlightsListHead,
         FlightsItem
     },
+    
+    methods:{
+        // 切换条数的时候触发
+        handleSizeChange(value){
+            this.pageSize=value
+        },
+        handleCurrentChange(value){
+            console.log(value);
+            
+        }
+    }
+    ,
     mounted(){
         //请求机票列表
         this.$axios({
