@@ -15,7 +15,7 @@
                 <!-- 航班信息 -->
                 <div>
                     <FlightsItem 
-                    v-for="(item,index) in flightsData.flights"
+                    v-for="(item,index) in dataList"
                     :key="index"
                     :data="item"
                     />
@@ -54,7 +54,9 @@ export default {
             // 默认条数
             pageSize:5,
             // 总条数
-            total:0
+            total:0,
+            // 存当前页的数据
+            dataList:[]
         }
     },
      components: {
@@ -69,6 +71,12 @@ export default {
         },
         handleCurrentChange(value){
             console.log(value);
+            this.pageindex=value;
+            this.dataList=this.flightsData.flights.slice(
+                // 在总列表中截取出当前页的数据
+               (this.pageIndex-1)*this.pageSize,
+               this.pageIndex*this.pageSize
+            )
             
         }
     }
@@ -79,9 +87,11 @@ export default {
             url:'/airs',
             params:this.$route.query
         }).then(res=>{
-            console.log(res.data);
+            // console.log(res.data);
             
             this.flightsData=res.data;
+            this.dataList=this.flightsData.flights.slice(0,5)
+            this.total=this.flightsData.total
         })
     }
 }
