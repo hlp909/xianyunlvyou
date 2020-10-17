@@ -45,7 +45,7 @@
                     v-for="(item,index) in airSizeList"
                     :key="index"
                     :label="item.name"
-                    :value="item.name">
+                    :value="item.size">
                     </el-option>
                 </el-select>
             </el-col>
@@ -74,9 +74,9 @@ export default {
             airSize: "",        // 机型大小
 
             airSizeList:[
-                {name:'大',type:'L'},
-                {name:'中',type:'M'},
-                {name:'小',type:'S'}
+                {name:'大',size:'L'},
+                {name:'中',size:'M'},
+                {name:'小',size:'S'}
             ]
         }
     },
@@ -126,12 +126,23 @@ export default {
 
          // 选择机型时候触发
         handleAirSize(value){
-           
+           // this.data是缓存的大数据，是不会被修改的
+            const arr=this.data.flights.filter(v=>{
+                return v.plane_size===value
+            })
+            //触发修改机票列表的方法
+            this.$emit('setDataList',arr)
         },
         
         // 撤销条件时候触发
         handleFiltersCancel(){
-            
+
+            this.airport="",        // 机场
+            this.flightTimes="",    // 出发时间
+            this.company="",        // 航空公司
+            this.airSize="",        // 机型大
+            //触发修改机票列表的方法
+            this.$emit('setDataList',this.data.flights)
         },
     }
 }
