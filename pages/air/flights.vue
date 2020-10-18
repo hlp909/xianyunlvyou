@@ -74,6 +74,12 @@ export default {
         FlightsFilters,
         FlightsAside
     },
+    watch:{
+        $route(){
+             // 获取机票列表
+            this.getData();
+        }
+    },
     
     methods:{
         // 切换条数的时候触发
@@ -102,24 +108,33 @@ export default {
                (this.pageIndex-1)*this.pageSize,
                this.pageIndex*this.pageSize
             )
+        },
+
+        // 获取机票列表
+        getData(){
+            //请求机票列表
+            this.$axios({
+                url:'/airs',
+                params:this.$route.query
+            }).then(res=>{
+                // console.log(res.data);
+                //总数据，flightsData.flights是会被修改
+                this.flightsData=res.data;
+                //缓存对象：一旦被赋值之后不会被修改
+
+                this.cacheFlightsData={...res.data}
+                this.dataList=this.flightsData.flights.slice(0,5)
+
+                // 初始化
+                this.total=this.flightsData.total
+                this.pageIndex=1
+            })
         }
     }
     ,
     mounted(){
-        //请求机票列表
-        this.$axios({
-            url:'/airs',
-            params:this.$route.query
-        }).then(res=>{
-            // console.log(res.data);
-            //总数据，flightsData.flights是会被修改
-            this.flightsData=res.data;
-            //缓存对象：一旦被赋值之后不会被修改
-
-            this.cacheFlightsData={...res.data}
-            this.dataList=this.flightsData.flights.slice(0,5)
-            this.total=this.flightsData.total
-        })
+         // 获取机票列表
+        this.getData();
     }
 }
 </script>

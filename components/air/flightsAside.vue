@@ -27,7 +27,7 @@
             <nuxt-link 
             v-for="(item,index) in history"
             :key="index"
-            to="`/air/flights?departCity=${item.departCity}&departCode=${item.departCode}&destCity=${item.destCity}&destCode=${item.destCode}&departDate=${item.departDate}`">
+            :to="`/air/flights?departCity=${item.departCity}&departCode=${item.departCode}&destCity=${item.destCity}&destCode=${item.destCode}&departDate=${item.departDate}`">
                 <el-row type="flex" 
                 justify="space-between" 
                 align="middle"
