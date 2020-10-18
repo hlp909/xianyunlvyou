@@ -70,19 +70,19 @@
             <div class="contact">
                 <el-form label-width="60px">
                     <el-form-item label="姓名">
-                        <el-input></el-input>
+                        <el-input v-model="contactName"></el-input>
                     </el-form-item>
 
                     <el-form-item label="手机">
-                        <el-input placeholder="请输入内容">
+                        <el-input v-model="contactPhone" placeholder="请输入内容">
                             <template slot="append">
-                            <el-button @click="handleSendCaptcha">发送验证码</el-button>
+                            <el-button @click="handleSendCaptcha" >发送验证码</el-button>
                             </template>
                         </el-input>
                     </el-form-item>
 
                     <el-form-item label="验证码">
-                        <el-input></el-input>
+                        <el-input v-model="captcha"></el-input>
                     </el-form-item>
                 </el-form>   
                 <el-button type="warning" class="submit" @click="handleSubmit">提交订单</el-button>
@@ -99,8 +99,14 @@ export default {
            users:[
                {username:'',id:''}
            ],
-            infoData:{}, // 总数据
-            insurances:[]   // 保险数据
+            
+            insurances:[] ,  // 保险id集合
+           
+            contactName:'',     //联系人
+            contactPhone:'',    //联系电话
+            invoice:false,      //发票
+            captcha:''   ,        //验证码
+            infoData:{}, // 机票数据的总数据
         }
     },
     methods: {
@@ -133,6 +139,19 @@ export default {
 
         // 提交订单
         handleSubmit(){
+            const data={
+                users:this.users,
+                insurances:this.insurances ,  // 保险id集合
+                contactName:this.contactName,     //联系人
+                contactPhone:this.contactPhone,    //联系电话
+                invoice:this.invoice,      //发票
+                captcha:this.captcha ,        //验证码
+                seat_xid:this.$route.query.seat_xid,
+                air:this.$route.query.id
+            }
+
+            console.log(data);
+            
             
         }
     },
