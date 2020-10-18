@@ -101,7 +101,7 @@ export default {
         // 跳转到订单页
         handleToOrder(item){
             this.$router.push({
-                path:'/airs/order',
+                path:'/air/order',
                 query:{
                     id:this.data.id,
                     seat_xid:item.seat_xid
