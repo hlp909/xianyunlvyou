@@ -57,7 +57,9 @@
                 :key="index">
                     <el-checkbox 
                     :label="`${item.type}：￥${item.price}/份×${users.length}  最高赔付${item.compensation}`" 
-                    border>
+                    border
+                    @change="handleInsurances(item)"
+                    >
                     </el-checkbox> 
                 </div>
             </div>
@@ -97,7 +99,8 @@ export default {
            users:[
                {username:'',id:''}
            ],
-            infoData:{}, // 保险数据
+            infoData:{}, // 总数据
+            insurances:[]   // 保险数据
         }
     },
     methods: {
@@ -112,7 +115,17 @@ export default {
         handleDeleteUser(index){
             this.users.splice(index,1)
         },
-        
+        //获取保险的数据
+        handleInsurances(item){
+            const index=this.insurances.indexOf(item.id)
+            if(index===-1){
+                this.insurances.push(item.id)
+            }else{
+                this.insurances.splice(index,1)
+            }
+            console.log(this.insurances);
+            
+        },
         // 发送手机验证码
         handleSendCaptcha(){
             
