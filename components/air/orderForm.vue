@@ -134,7 +134,35 @@ export default {
         },
         // 发送手机验证码
         handleSendCaptcha(){
-            
+             if(!this.contactPhone){
+                this.$confirm('手机号码不能为空', '提示', {
+                    confirmButtonText: '确定',
+                    showCancelButton: false,
+                    type: 'warning'
+                })
+            return;
+        }
+        if(this.contactPhone.length !== 11){
+                this.$confirm('手机号码格式错误', '提示', {
+                    confirmButtonText: '确定',
+                    showCancelButton: false,
+                    type: 'warning'
+                })
+                return;
+            }
+            this.$axios({
+                url:'/captchas',
+                method:"POST",
+                data:{tel:this.contactPhone}
+            }).then(res=>{
+                // console.log(res);
+                const {code}=res.data
+                this.$confirm(`模拟手机验证码为:${code}`,'提示',{
+                    confirmButtonText: '确定',
+                    showCancelButton: false,
+                    type: 'warning'
+                })
+            })
         },
 
         // 提交订单
@@ -150,7 +178,17 @@ export default {
                 air:this.$route.query.id
             }
 
-            console.log(data);
+            this.$axios({
+                url:'/airorders',
+                method:"POST",
+                data:data,
+                headers:{
+                    Authorization: `Bearer ${this.$store.state.user.userInfo.token}`
+                }
+            }).then(res=>{
+                console.log(res);
+                
+            })
             
             
         }
