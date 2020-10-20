@@ -202,6 +202,9 @@ export default {
             }
         }).then(res=>{
             this.infoData=res.data
+
+            // 把值传递给父组件
+            this.$emit('setInfoData',this.infoData)
         })
     }
 }
