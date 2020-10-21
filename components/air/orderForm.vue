@@ -191,8 +191,14 @@ export default {
                     Authorization: `Bearer ${this.$store.state.user.userInfo.token}`
                 }
             }).then(res=>{
-                console.log(res);
-                
+                this.$message.success('订单正在生成中，请稍等...')
+                const {id}=res.data.data
+                this.$router.push({
+                    path:'/air/pay',
+                    query:{
+                        id
+                    }
+                })
             })
             
             
@@ -229,7 +235,8 @@ export default {
             this.$emit('setAllPrice',price)
             return price;
         }
-    }
+    },
+   
 }
 </script>
 

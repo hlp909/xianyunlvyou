@@ -41,7 +41,7 @@
         </el-row>
         <el-row type="flex" justify="space-between" align="middle" class="info-bar">
             <span>应付总额：</span>
-            <span class="price">￥{{allPrice}} </span>
+            <span class="price">￥{{allPrice | toFixed}} </span>
         </el-row>           
     </div>
 </template>
@@ -84,6 +84,11 @@ export default {
             return `${ Math.floor(dis / 60)}时${dis % 60}分`
         }
     },
+     filters:{
+        toFixed(price){
+           return Number(price).toFixed(2)
+        }
+    }
 }
 </script>
 
