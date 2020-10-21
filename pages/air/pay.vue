@@ -36,11 +36,36 @@ export default {
             timer:null
         }
     },
+    
      methods:{
         isPay(){
-            console.log("是否付款");
-            return true;
+            
+            //检查付款结果
+            return this.$axios({
+                url:'/airorders/checkpay',
+                method:"POST",
+                data:{
+                    id:this.$route.query.id,
+                    nonce_str:this.order.price,
+                    out_trade_no:this.order.orderNo
+                }, 
+                headers:{
+                    Authorization: `Bearer ${this.$store.state.user.userInfo.token}`
+                }
+            }).then(res=>{
+                const {statusTxt}=res.data
+                if(statusTxt==="支付完成"){
+                    return true;
+                }else{
+                    return false;
+                }
+            })
+
+            // return true;
         }
+    },
+    destroyed(){
+        clearInterval(this.timer)
     },
     mounted(){
         setTimeout(()=>{
@@ -61,8 +86,8 @@ export default {
 
                 //判断当前是否付款成功
 
-                this.timer=setTimeout(()=>{
-                    const isPay=this.isPay();
+                this.timer=setInterval( async ()=>{
+                    const isPay=await this.isPay();
                     if(isPay){
                         this.$message.success('付款成功')
                         clearInterval(this.timer)
@@ -70,7 +95,7 @@ export default {
                     }
                 },3000)
             })
-        },100)
+        },200)
     },
    
 }
