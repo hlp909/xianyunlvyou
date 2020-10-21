@@ -31,7 +31,15 @@ import QRCode from "qrcode";
 export default {
     data(){
         return{
-            order:{}
+            order:{},
+            // 检测付款定时器
+            timer:null
+        }
+    },
+     methods:{
+        isPay(){
+            console.log("是否付款");
+            return true;
         }
     },
     mounted(){
@@ -50,9 +58,21 @@ export default {
                 QRCode.toCanvas(stage, this.order.payInfo.code_url, {
                     width: 200
                 }); 
+
+                //判断当前是否付款成功
+
+                this.timer=setTimeout(()=>{
+                    const isPay=this.isPay();
+                    if(isPay){
+                        this.$message.success('付款成功')
+                        clearInterval(this.timer)
+                        return;
+                    }
+                },3000)
             })
         },100)
-    }
+    },
+   
 }
 </script>
 
