@@ -2,7 +2,7 @@
     <div class="container">
         <div class="main">
             <div class="pay-title">
-                支付总金额 <span class="pay-price">￥ 1000</span>
+                支付总金额 <span class="pay-price">￥ {{order.price}}</span>
             </div>
             <div class="pay-main">
                 <h4>微信支付</h4>
@@ -26,7 +26,14 @@
 </template>
 
 <script>
+// 生成二维码的包
+import QRCode from "qrcode";
 export default {
+    data(){
+        return{
+            order:{}
+        }
+    },
     mounted(){
         setTimeout(()=>{
             this.$axios({
@@ -35,8 +42,14 @@ export default {
                     Authorization: `Bearer ${this.$store.state.user.userInfo.token}`
                 }
             }).then(res=>{
-                console.log(res.data);
-                
+               this.order=res.data
+                this.order.price=Number(this.order.price).toFixed(2)
+               
+                // 生成二维码到canvas
+                const stage = document.querySelector("#qrcode-stage");
+                QRCode.toCanvas(stage, this.order.payInfo.code_url, {
+                    width: 200
+                }); 
             })
         },100)
     }
